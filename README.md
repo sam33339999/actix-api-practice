@@ -9,3 +9,6 @@
 - `log`: 一個 Rust 的日誌框架。
 - `env_logger`: 一個 log 的環境變數日誌輸出器。
 - `serde`: 一個 Rust 的序列化/反序列化框架。 (features = ["derive"])
+
+## 參考:
+[actix-example](https://github.com/actix/examples)
