@@ -10,7 +10,9 @@ pub fn setup_route(cfg: &mut web::ServiceConfig) {
 pub async fn get_posts_handle() -> impl Responder {
     use crate::schema::posts::dsl::*;
 
-    let connection = &mut crate::establish_connection();
+    // let connection = &mut crate::establish_connection();
+    let pool = crate::get_connection_pool();
+    let connection = &mut pool.get().expect("Failed get db connection from pool");
     // let conn_pool = crate::create_connection_pool();
     // let connection = &mut conn_pool.get().expect("Failed get db connection from pool");
     let result = posts
