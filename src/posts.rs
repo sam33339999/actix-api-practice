@@ -8,12 +8,19 @@ pub fn setup_route(cfg: &mut web::ServiceConfig) {
 }
 
 pub async fn get_posts_handle() -> impl Responder {
-    web::Json(Post {
-        id: 1,
-        title: "Hello, world!".to_string(),
-        body: "Hello, world!".to_string(),
-        published: true,
-    })
+    use crate::schema::posts::dsl::*;
+
+    let connection = &mut crate::establish_connection();
+    // let conn_pool = crate::create_connection_pool();
+    // let connection = &mut conn_pool.get().expect("Failed get db connection from pool");
+    let result = posts
+        .filter(published.eq(true))
+        .limit(10)
+        .select(Post::as_select())
+        .load(connection)
+        .expect("ERROR Loading posts");
+
+    web::Json(result)
 }
 
 pub async fn create_post_handle(data: web::Json<NewPostInput>) -> impl Responder {
