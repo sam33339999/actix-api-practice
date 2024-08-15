@@ -12,6 +12,13 @@ pub(crate) fn config_api_service(cfg: &mut web::ServiceConfig) {
 
     cfg.route("healthz", web::get().to(healthz));
     cfg.service(web::resource("/config").to(|| async { "Route: /app/config" }));
+    cfg.route(
+        "panic",
+        web::get().to(|| async {
+            panic!("Panic! This is a test for panic");
+            "Hello world"
+        }),
+    );
 
     // api for posts
 

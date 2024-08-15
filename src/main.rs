@@ -1,10 +1,11 @@
 use actix_cors::Cors;
 use actix_web::{http::header, middleware::Logger, web, App, HttpServer};
-
 mod routes;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
+    // 安裝 color_eyre 用來顯示更好的錯誤訊息
+    color_eyre::install().expect("Faield to install color_eyre");
     // with env to setting host serve and port
     let host = std::env::var("HOST").unwrap_or("127.0.0.1".to_string());
     let port = std::env::var("PORT").unwrap_or("8999".to_string());
